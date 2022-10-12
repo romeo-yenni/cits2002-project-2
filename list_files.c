@@ -22,10 +22,11 @@ void scan_directory(char *dirname) {
 //  READ FROM THE REQUIRED DIRECTORY, UNTIL WE REACH ITS END
     while((dp = readdir(dirp)) != NULL) {
     
-    	if (strcmp(dp->d_name, ".") == 0 || strcmp(dp->d_name, "..") == 0)
+    	if (strcmp(dp->d_name, ".") == 0 || strcmp(dp->d_name, "..") == 0) {
             continue;
+        }
     
-	struct 		stat stat_info;
+	    struct 		stat stat_info;
         char            pathname[MAXPATHLEN];
         
         sprintf(pathname, "%s/%s", dirname, dp->d_name);
