@@ -13,7 +13,7 @@ void scan_directory(char *dirname) {
     struct stat path_stat;
     stat(dirname, &path_stat);
     if ( S_ISREG(path_stat.st_mode) ) {
-        printf("is a regular file\n");
+        printf("%s\n", dirname);
     }
     else {
 
