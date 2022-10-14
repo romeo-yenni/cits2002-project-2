@@ -8,15 +8,31 @@
 #include  <sys/param.h>
 #include  <time.h>
 #include  <string.h>
+#include <unistd.h>
+#include <getopt.h>
 
-#define	CHECK_ALLOC(p) if(p == NULL) { perror(__func__); exit(EXIT_FAILURE); }
-
-extern void list_all_files();
-extern void scan_directory(char *);
-
+// FILES STRUCTURE
 typedef struct {
     char        *pathname;
 } FILES;
 
+// DECLARE GLOBAL PREPROCESSOR CONSTANTS
+#define	OPTLIST		"bruf:l:"
+#define	CHECK_ALLOC(p) if(p == NULL) { perror(__func__); exit(EXIT_FAILURE); }
+#define DEFAULT_TROVE_FILE "/tmp/trove"
+#define DEFAULT_LENGTH 4
+
+// DECLARE GLOBAL FUNCTIONS
+extern void list_all_files();
+extern void scan_directory(char *);
+
+// DECLARE GLOBAL VARIABLES
 extern FILES           *files;
 extern int             nfiles;
+extern int                opt;
+extern char           *filenm;
+extern bool             bflag;
+extern bool             rflag;
+extern bool             uflag;
+extern bool             fflag;
+extern bool             lflag;
