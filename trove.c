@@ -76,13 +76,24 @@ int main(int argc, char *argv[]) {
         printf("first invocation on cli supplied word: %s, in %s.\n", argv[0], filenm);
     }
     else if (bflag) {
-        printf("second invocation, building trovefile [%s] from %s, with words of length %i\n", filenm, argv[0], length);
+        printf("second invocation, building trovefile [%s], with words of length %i, from: \n", filenm, length);
+        for (int i=0;i<argc;i++) {
+            scan_directory(argv[i]);
+            //printf("-: %s\n", argv[i]);
+        }
+        list_all_files();
     }
     else if (rflag) {
-        printf("second invocation, remove files within [%s] from %s\n", argv[0], filenm);
+        printf("second invocation, remove files from {%s} that are found: \n", filenm);
+        for (int i=0;i<argc;i++) {
+            printf("-: %s\n", argv[i]);
+        }
     }
     else if (uflag) {
-        printf("second invocation, update [%s] from file within %s, with words of length %i\n", filenm, argv[0], length);
+        printf("second invocation, update [%s], with words of length %i, from: \n", filenm, length);
+        for (int i=0;i<argc;i++) {
+            printf("-: %s\n", argv[i]);
+        }
     }
     else {
         //usage();
