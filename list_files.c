@@ -12,6 +12,7 @@ void scan_directory(char *dirname) {
 
     struct stat path_stat;
     stat(dirname, &path_stat);
+
     if ( S_ISREG(path_stat.st_mode) ) {
 
         char *fullpath = realpath(dirname, NULL);
@@ -45,17 +46,19 @@ void scan_directory(char *dirname) {
             char            pathname[MAXPATHLEN];
             
             sprintf(pathname, "%s/%s", dirname, dp->d_name);
+
+            char *fullpath = realpath(pathname, NULL);
+            CHECK_ALLOC(fullpath);            
             
-            
-            if(stat(pathname, &stat_info) != 0) {
-                perror( pathname );
+            if(stat(fullpath, &stat_info) != 0) {
+                perror( fullpath );
                 exit(EXIT_FAILURE);
             }
             
-            stat(pathname, &stat_info);
+            stat(fullpath, &stat_info);
         
             if ( S_ISDIR(stat_info.st_mode) ) {
-                scan_directory(pathname);
+                scan_directory(fullpath);
                 continue;
             }
 	
@@ -63,7 +66,7 @@ void scan_directory(char *dirname) {
             files                   = realloc(files, (nfiles+1)*sizeof(files[0]));
             CHECK_ALLOC(files);		
 
-            files[nfiles].pathname  = strdup(pathname);
+            files[nfiles].pathname  = strdup(fullpath);
             CHECK_ALLOC(files[nfiles].pathname);	
 
             ++nfiles;
