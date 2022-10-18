@@ -79,7 +79,6 @@ int main(int argc, char *argv[]) {
         printf("second invocation, building trovefile [%s], with words of length %i, from: \n", filenm, length);
         for (int i=0;i<argc;i++) {
             scan_directory(argv[i]);
-            //printf("-: %s\n", argv[i]);
         }
         list_all_files();
     }

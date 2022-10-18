@@ -13,21 +13,28 @@ void scan_directory(char *dirname) {
     struct stat path_stat;
     stat(dirname, &path_stat);
     if ( S_ISREG(path_stat.st_mode) ) {
-        printf("%s\n", dirname);
+
+        char *fullpath = realpath(dirname, NULL);
+        CHECK_ALLOC(fullpath);
+
+        files                   = realloc(files, (nfiles+1)*sizeof(files[0]));
+        CHECK_ALLOC(files);			
+
+        files[nfiles].pathname  = strdup(fullpath);
+        CHECK_ALLOC(files[nfiles].pathname);	
+        ++nfiles;
     }
     else {
 
         DIR             *dirp;
         struct dirent   *dp;
 
-//  ENSURE THAT WE CAN OPEN (read-only) THE REQUIRED DIRECTORY
         dirp       = opendir(dirname);
         if(dirp == NULL) {
             perror( dirname );
             exit(EXIT_FAILURE);
         }
 
-//  READ FROM THE REQUIRED DIRECTORY, UNTIL WE REACH ITS END
         while((dp = readdir(dirp)) != NULL) {
         
             if (strcmp(dp->d_name, ".") == 0 || strcmp(dp->d_name, "..") == 0) {
@@ -40,7 +47,6 @@ void scan_directory(char *dirname) {
             sprintf(pathname, "%s/%s", dirname, dp->d_name);
             
             
-//  DETERMINE ATTRIBUTES OF THIS DIRECTORY ENTRY
             if(stat(pathname, &stat_info) != 0) {
                 perror( pathname );
                 exit(EXIT_FAILURE);
@@ -54,18 +60,15 @@ void scan_directory(char *dirname) {
             }
 	
 
-//  EXTEND OUR ARRAY OF STRUCTURES BY ONE ELEMENT
             files                   = realloc(files, (nfiles+1)*sizeof(files[0]));
-            CHECK_ALLOC(files);			// ensure allocation was OK
+            CHECK_ALLOC(files);		
 
-//  REMEMBER (COPY) THIS ELEMENT'S RELATIVE PATHNAME
             files[nfiles].pathname  = strdup(pathname);
-            CHECK_ALLOC(files[nfiles].pathname);	// ensure allocation was OK
+            CHECK_ALLOC(files[nfiles].pathname);	
 
             ++nfiles;
         }
 
-//  CLOSE THE DIRECTORY
     closedir(dirp);
     }
 }

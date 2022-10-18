@@ -1,4 +1,5 @@
 #define _POSIX_C_SOURCE     200809L
+#define _DEFAULT_SOURCE
 #include  <stdio.h>
 #include  <stdbool.h>
 #include  <stdlib.h>
@@ -10,6 +11,7 @@
 #include  <string.h>
 #include <unistd.h>
 #include <getopt.h>
+#include <limits.h>
 
 // FILES STRUCTURE
 typedef struct {
