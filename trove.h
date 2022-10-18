@@ -12,11 +12,18 @@
 #include <unistd.h>
 #include <getopt.h>
 #include <limits.h>
+#include <ctype.h>
 
 // FILES STRUCTURE
 typedef struct {
     char        *pathname;
 } FILES;
+
+// WORDS STRUCTURE
+typedef struct {
+    char        *word;
+    char        *filepath;
+} WORDS;
 
 // DECLARE GLOBAL PREPROCESSOR CONSTANTS
 #define	OPTLIST		"bruf:l:"
@@ -27,10 +34,14 @@ typedef struct {
 // DECLARE GLOBAL FUNCTIONS
 extern void list_all_files();
 extern void scan_directory(char *);
+extern void read_file(char *, int);
+//extern bool isUnique(char words[], char *) {
 
 // DECLARE GLOBAL VARIABLES
 extern FILES           *files;
 extern int             nfiles;
+extern WORDS       *wordstruc;
+extern int             nwords;
 extern int                opt;
 extern char           *filenm;
 extern bool             bflag;

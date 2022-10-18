@@ -3,6 +3,9 @@
 FILES *files  = NULL;
 int nfiles  = 0;
 
+WORDS *wordstruc = NULL;
+int nwords = 0;
+
 int  opt;
 
 char *progname;
@@ -74,27 +77,32 @@ int main(int argc, char *argv[]) {
     else if (fflag && !bflag && !rflag && !uflag && (argc == 1)) {
         printf("first invocation on cli supplied word: %s, in %s.\n", argv[0], filenm);
     }
-    else if (!fflag && !bflag && !rflag && !uflag && (argc == 1)) {
-        printf("first invocation on cli supplied word: %s, in %s.\n", argv[0], filenm);
-    }
     else if (bflag) {
         printf("second invocation, building trovefile [%s], with words of length %i, from: \n", filenm, length);
+        for (int i=0;i<argc;i++) {
+            scan_directory(argv[i]);
+            for (int n=0 ; n<nfiles ; ++n) {
+                read_file(files[n].pathname, length);
+            }
+        }
+        for (int i=0;i<nwords;i++) {
+            printf("%s -- %s\n", wordstruc[i].word, wordstruc[i].filepath);
+        }
+        //list_all_files();
+    }
+    else if (rflag) {
+        printf("second invocation, remove files from {%s} that are found: \n", filenm);
         for (int i=0;i<argc;i++) {
             scan_directory(argv[i]);
         }
         list_all_files();
     }
-    else if (rflag) {
-        printf("second invocation, remove files from {%s} that are found: \n", filenm);
-        for (int i=0;i<argc;i++) {
-            printf("-: %s\n", argv[i]);
-        }
-    }
     else if (uflag) {
         printf("second invocation, update [%s], with words of length %i, from: \n", filenm, length);
         for (int i=0;i<argc;i++) {
-            printf("-: %s\n", argv[i]);
+            scan_directory(argv[i]);
         }
+        list_all_files();
     }
     else {
         //usage();

@@ -1,6 +1,6 @@
 PROJECT =  trove
 HEADERS =  $(PROJECT).h
-OBJ     =  trove.o list_files.o
+OBJ     =  trove.o list_files.o read_file.o
 
 C11     =  cc -std=c11
 CFLAGS  =  -Wall -Werror

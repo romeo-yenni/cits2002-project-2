@@ -31,10 +31,7 @@ void scan_directory(char *dirname) {
         struct dirent   *dp;
 
         dirp       = opendir(dirname);
-        if(dirp == NULL) {
-            perror( dirname );
-            exit(EXIT_FAILURE);
-        }
+        CHECK_ALLOC(dirp);
 
         while((dp = readdir(dirp)) != NULL) {
         
@@ -62,7 +59,6 @@ void scan_directory(char *dirname) {
                 continue;
             }
 	
-
             files                   = realloc(files, (nfiles+1)*sizeof(files[0]));
             CHECK_ALLOC(files);		
 
