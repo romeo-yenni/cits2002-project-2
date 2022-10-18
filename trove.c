@@ -43,7 +43,9 @@ int main(int argc, char *argv[]) {
             lflag = !lflag;
         }
 	else if(opt == 'f') {
-            filenm  =  strdup(optarg);
+            char *fullpath = realpath(optarg, NULL);
+            CHECK_ALLOC(fullpath);
+            filenm  =  strdup(fullpath);
             fflag = !fflag;
         }
 //  OOPS - AN UNKNOWN ARGUMENT
