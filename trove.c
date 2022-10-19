@@ -96,7 +96,10 @@ int main(int argc, char *argv[]) {
         for (int i=0;i<argc;i++) {
             scan_directory(argv[i]);
         }
-        list_all_files();
+        read_trove(filenm);
+        for (int i=0;i<nwords;i++) {
+            printf("%s %s\n", wordstruc[i].word, wordstruc[i].filepath);
+        }
     }
     else {
         //usage();
