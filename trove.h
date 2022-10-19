@@ -35,7 +35,7 @@ typedef struct {
 extern void list_all_files();
 extern void scan_directory(char *);
 extern void read_file(char *, int);
-//extern bool isUnique(char words[], char *) {
+extern void write_trove(char *);
 
 // DECLARE GLOBAL VARIABLES
 extern FILES           *files;

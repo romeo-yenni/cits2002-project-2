@@ -46,9 +46,7 @@ int main(int argc, char *argv[]) {
             lflag = !lflag;
         }
 	else if(opt == 'f') {
-            char *fullpath = realpath(optarg, NULL);
-            CHECK_ALLOC(fullpath);
-            filenm  =  strdup(fullpath);
+            filenm  =  strdup(optarg);
             fflag = !fflag;
         }
 //  OOPS - AN UNKNOWN ARGUMENT
@@ -62,15 +60,7 @@ int main(int argc, char *argv[]) {
     }
     argc  -= optind;
     argv  += optind;
-/**
-//  SCAN EVERY DIRECTORY REQUESTED ON THE COMMAND-LINE
-    if (fflag) {
-	scan_directory(filenm);
 
-    list_all_files();
-
-    }
-    **/
     if ( (bflag&&rflag&&uflag) | (bflag&&rflag) | (bflag&&uflag) | (uflag&&rflag) | (rflag&&lflag) ) {
         usage();
     }
@@ -79,16 +69,20 @@ int main(int argc, char *argv[]) {
     }
     else if (bflag) {
         printf("second invocation, building trovefile [%s], with words of length %i, from: \n", filenm, length);
+        FILE *fp;
+        fp = fopen(filenm, "w");
+        fclose(fp);
+        char *fullpath = realpath(filenm, NULL);
+        CHECK_ALLOC(fullpath);
+        filenm = strdup(fullpath);
+
         for (int i=0;i<argc;i++) {
             scan_directory(argv[i]);
             for (int n=0 ; n<nfiles ; ++n) {
                 read_file(files[n].pathname, length);
             }
         }
-        for (int i=0;i<nwords;i++) {
-            printf("%s -- %s\n", wordstruc[i].word, wordstruc[i].filepath);
-        }
-        //list_all_files();
+        write_trove(filenm);
     }
     else if (rflag) {
         printf("second invocation, remove files from {%s} that are found: \n", filenm);
