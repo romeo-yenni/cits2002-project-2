@@ -89,7 +89,8 @@ int main(int argc, char *argv[]) {
         for (int i=0;i<argc;i++) {
             scan_directory(argv[i]);
         }
-        list_all_files();
+        read_trove(filenm);
+        update_trove();
     }
     else if (uflag) {
         printf("second invocation, update [%s], with words of length %i, from: \n", filenm, length);
