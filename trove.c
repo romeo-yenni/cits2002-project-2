@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
                 read_file(files[n].pathname, length);
             }
         }
-        write_trove(filenm);
+        write_trove();
     }
     else if (rflag) {
         printf("second invocation, remove files from {%s} that are found: \n", filenm);
@@ -97,9 +97,11 @@ int main(int argc, char *argv[]) {
             scan_directory(argv[i]);
         }
         read_trove(filenm);
-        for (int i=0;i<nwords;i++) {
-            printf("%s %s\n", wordstruc[i].word, wordstruc[i].filepath);
+        update_trove();
+        for (int n=0 ; n<nfiles ; ++n) {
+            read_file(files[n].pathname, length);
         }
+        write_trove();
     }
     else {
         //usage();

@@ -35,8 +35,9 @@ typedef struct {
 extern void list_all_files();
 extern void scan_directory(char *);
 extern void read_file(char *, int);
-extern void write_trove(char *);
+extern void write_trove();
 extern void read_trove(char *);
+extern void update_trove();
 
 // DECLARE GLOBAL VARIABLES
 extern FILES           *files;

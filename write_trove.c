@@ -1,6 +1,6 @@
 #include "trove.h"
 
-void write_trove(char *dest) {
+void write_trove() {
 
     FILE *fp;
     fp  = fopen (filenm, "w");
