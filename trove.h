@@ -13,6 +13,8 @@
 #include <getopt.h>
 #include <limits.h>
 #include <ctype.h>
+#include <assert.h>
+#include <zlib.h>
 
 // FILES STRUCTURE
 typedef struct {

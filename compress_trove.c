@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <assert.h>
-#include <stdlib.h>
-#include <string.h>
-#include <zlib.h>
+#include "trove.h"
 
 #define CHUNK 16384
 
