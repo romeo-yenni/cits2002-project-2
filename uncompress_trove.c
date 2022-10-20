@@ -1,3 +1,6 @@
+
+#FAR BETTER VERSION CONTAINED IN COMPRESS_TROVE.C
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
