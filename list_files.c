@@ -18,7 +18,7 @@ void scan_directory(char *dirname) {
         char *fullpath = realpath(dirname, NULL);
         CHECK_ALLOC(fullpath);
 
-        files                   = realloc(files, (nfiles+1)*sizeof(files[0]));
+        files                   = realloc(files, (nfiles+1)*sizeof(FILES));
         CHECK_ALLOC(files);			
 
         files[nfiles].pathname  = strdup(fullpath);
@@ -59,7 +59,7 @@ void scan_directory(char *dirname) {
                 continue;
             }
 	
-            files                   = realloc(files, (nfiles+1)*sizeof(files[0]));
+            files                   = realloc(files, (nfiles+1)*sizeof(FILES));
             CHECK_ALLOC(files);		
 
             files[nfiles].pathname  = strdup(fullpath);

@@ -31,7 +31,7 @@ void read_file(char *filename, int length) {
                     word_size = 0;
                 }
                 else {
-                    wordstruc = realloc(wordstruc, (nwords+1)*sizeof(wordstruc[0]));
+                    wordstruc = realloc(wordstruc, (nwords+1)*sizeof(WORDS));
                     CHECK_ALLOC(wordstruc);
 
                     wordstruc[nwords].word  = strdup(temp);

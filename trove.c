@@ -6,6 +6,9 @@ int nfiles  = 0;
 WORDS *wordstruc = NULL;
 int nwords = 0;
 
+T_PATHS *paths = NULL;
+int npaths = 0;
+
 int  opt;
 
 char *progname;
@@ -90,7 +93,15 @@ int main(int argc, char *argv[]) {
             scan_directory(argv[i]);
         }
         read_trove(filenm);
-        update_trove();
+        if (check_wipe()) {
+            FILE *fp;
+            fp  = fopen (filenm, "w");
+            fclose(fp);
+        }
+        else {   
+            //read_trove(filenm);
+            update_trove(1);
+        }
     }
     else if (uflag) {
         printf("second invocation, update [%s], with words of length %i, from: \n", filenm, length);
@@ -98,7 +109,7 @@ int main(int argc, char *argv[]) {
             scan_directory(argv[i]);
         }
         read_trove(filenm);
-        update_trove();
+        update_trove(2);
         for (int n=0 ; n<nfiles ; ++n) {
             read_file(files[n].pathname, length);
         }

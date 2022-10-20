@@ -1,7 +1,24 @@
 #include "trove.h"
 
+bool check_wipe() {
+    int cnt = 0;
+    for (int i=0;i<nfiles;i++) {
+        for (int j=0;j<npaths;j++) {
+            if (strcmp(files[i].pathname, paths[j].filepath) == 0) {
+                cnt++;
+            }
+        }
+    }
+    if (cnt==npaths) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 void remove_element(int index) {
-   for (int i=index;i<nwords;i++) {
+    for (int i=index;i<nwords;i++) {
         wordstruc[i] = wordstruc[i+1];
     }
     wordstruc = realloc(wordstruc, (nwords - 1) * sizeof(WORDS) );
@@ -29,18 +46,29 @@ void check_words(int i) {
     }
 }
 
-void update_trove() {
+void update_trove(int op) {
 
-    for (int i=0;i<nfiles;i++) {
-        check_words(i);
-        if (wordstruc == NULL) {
-            break;
-        }
+    if ( (check_wipe()) && (op == 1) ) {
+        FILE *fp;
+        fp  = fopen (filenm, "w");
+        fclose(fp);
     }
-
-    FILE *fp;
-    fp  = fopen (filenm, "w");
-    write_trove();
-    fclose(fp);
-
+    else if ( (check_wipe()) && (op == 2) ) {
+        FILE *fp;
+        fp  = fopen (filenm, "w");
+        write_trove();
+        fclose(fp);
+    }
+    else {
+        for (int i=0;i<nfiles;i++) {
+            check_words(i);
+            if (wordstruc == NULL) {
+                break;
+            }
+        }
+        FILE *fp;
+        fp  = fopen (filenm, "w");
+        write_trove();
+        fclose(fp);
+    }
 }

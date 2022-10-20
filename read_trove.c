@@ -1,7 +1,15 @@
 #include "trove.h"
 
+bool is_Unique(char * file) {
+    for (int i=0;i<npaths;i++) {
+        if (strcmp(file, paths[i].filepath) == 0) {
+            return false;
+        }
+    }
+    return true;
+}
 
-void trim_line(char line[])
+void trim_line(char *line)
 {
     int i = 0;
     while(line[i] != '\0') {
@@ -46,7 +54,7 @@ void read_trove(char *file) {
             }
         }
 
-        wordstruc = realloc(wordstruc, (nwords+1)*sizeof(wordstruc[0]));
+        wordstruc = realloc(wordstruc, (nwords+1)*sizeof(WORDS));
         CHECK_ALLOC(wordstruc);
 
 
@@ -55,6 +63,14 @@ void read_trove(char *file) {
         wordstruc[nwords].filepath = strdup(path_temp);
         CHECK_ALLOC(wordstruc[nwords].filepath);
         nwords++;
+
+        if (is_Unique(path_temp)) {
+            paths = realloc(paths, (npaths+1)*sizeof(T_PATHS));
+            CHECK_ALLOC(paths);
+            paths[npaths].filepath = strdup(path_temp);
+            CHECK_ALLOC(paths[npaths].filepath);
+            npaths++;
+        }
 
         word_temp[0] = '\0';
         path_temp[0] = '\0';
