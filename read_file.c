@@ -1,8 +1,8 @@
 #include "trove.h"
 
-bool checkUnique(char *word) {
+bool checkUnique(char *word, char *filename) {
     for (int i=0;i<nwords;i++) {
-        if ( strcmp(wordstruc[i].word, word) == 0 ) {
+        if ( (strcmp(wordstruc[i].word, word) == 0) && (strcmp(wordstruc[i].filepath, filename) == 0) ) {
             return true;
         }
     }
@@ -26,7 +26,7 @@ void read_file(char *filename, int length) {
         ch = fgetc(ptr);
         if (!isalnum(ch)) {
             if (word_size >= length) {
-                if ( checkUnique(temp) ) {
+                if ( checkUnique(temp, filename) ) {
                     temp[0] = '\0';
                     word_size = 0;
                 }

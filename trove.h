@@ -30,6 +30,11 @@ typedef struct {
     char        *filepath;
 } T_PATHS;
 
+// SEARCH STRUCTURE
+typedef struct {
+    char        *filepath;
+} SEARCH;
+
 // DECLARE GLOBAL PREPROCESSOR CONSTANTS
 #define	OPTLIST		"bruf:l:"
 #define	CHECK_ALLOC(p) if(p == NULL) { perror(__func__); exit(EXIT_FAILURE); }
@@ -46,6 +51,7 @@ extern void update_trove(int);
 extern void collect_trove_paths();
 extern void trim_line(char *);
 extern bool check_wipe();
+extern void search_trove(char *word);
 
 // DECLARE GLOBAL VARIABLES
 extern FILES           *files;
@@ -54,6 +60,8 @@ extern WORDS       *wordstruc;
 extern int             nwords;
 extern T_PATHS         *paths;
 extern int             npaths;
+extern SEARCH          *search;
+extern int            nsearch;
 extern int                opt;
 extern char           *filenm;
 extern bool             bflag;

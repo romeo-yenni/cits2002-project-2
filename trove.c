@@ -9,6 +9,9 @@ int nwords = 0;
 T_PATHS *paths = NULL;
 int npaths = 0;
 
+SEARCH *search = NULL;
+int nsearch = 0;
+
 int  opt;
 
 char *progname;
@@ -68,10 +71,10 @@ int main(int argc, char *argv[]) {
         usage();
     }
     else if (fflag && !bflag && !rflag && !uflag && (argc == 1)) {
-        printf("first invocation on cli supplied word: %s, in %s.\n", argv[0], filenm);
+        read_trove(filenm);
+        search_trove(argv[0]);
     }
     else if (bflag) {
-        printf("second invocation, building trovefile [%s], with words of length %i, from: \n", filenm, length);
         FILE *fp;
         fp = fopen(filenm, "w");
         fclose(fp);
@@ -88,7 +91,6 @@ int main(int argc, char *argv[]) {
         write_trove();
     }
     else if (rflag) {
-        printf("second invocation, remove files from {%s} that are found: \n", filenm);
         for (int i=0;i<argc;i++) {
             scan_directory(argv[i]);
         }
@@ -103,7 +105,6 @@ int main(int argc, char *argv[]) {
         }
     }
     else if (uflag) {
-        printf("second invocation, update [%s], with words of length %i, from: \n", filenm, length);
         for (int i=0;i<argc;i++) {
             scan_directory(argv[i]);
         }
@@ -120,10 +121,7 @@ int main(int argc, char *argv[]) {
         }
     }
     else {
-        //usage();
-        printf(" ");
+        usage();
     }
-
-
     return 0;
 }
