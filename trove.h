@@ -13,8 +13,8 @@
 #include <getopt.h>
 #include <limits.h>
 #include <ctype.h>
-#include <assert.h>
-#include <zlib.h>
+#include <fcntl.h>
+#include <sys/wait.h>
 
 // FILES STRUCTURE
 typedef struct {
@@ -55,8 +55,7 @@ extern void trim_line(char *);
 extern bool check_wipe();
 extern void search_trove(char *word);
 extern void check_within();
-extern int def(FILE *, FILE *, int);
-extern int inf(FILE *, FILE *);
+extern void compress();
 
 // DECLARE GLOBAL VARIABLES
 extern FILES           *files;

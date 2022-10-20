@@ -74,21 +74,27 @@ int main(int argc, char *argv[]) {
         read_trove(filenm);
         search_trove(argv[0]);
     }
+    else if (!fflag && !bflag && !rflag && !uflag && (argc == 1)) {
+        read_trove(filenm);
+        search_trove(argv[0]);
+    }
     else if (bflag) {
-        FILE *fp;
-        fp = fopen(filenm, "w");
-        fclose(fp);
-        char *fullpath = realpath(filenm, NULL);
-        CHECK_ALLOC(fullpath);
-        filenm = strdup(fullpath);
 
+        // FILE *fp;
+        // fp = fopen(filenm, "w");
+        // fclose(fp);
+        // char *fullpath = realpath(filenm, NULL);
+        // CHECK_ALLOC(fullpath);
+        // remove(filenm);
+        // filenm = strdup(fullpath);
         for (int i=0;i<argc;i++) {
             scan_directory(argv[i]);
             for (int n=0 ; n<nfiles ; ++n) {
                 read_file(files[n].pathname, length);
             }
         }
-        write_trove();
+        // write_trove();
+        compress();
     }
     else if (rflag) {
         for (int i=0;i<argc;i++) {
