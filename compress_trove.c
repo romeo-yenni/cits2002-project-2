@@ -5,15 +5,15 @@
 
 #define CHUNK 0x4000
 
-#define CALL_ZLIB(x) {                                                  
-        int status;                                                     
-        status = x;                                                     
-        if (status < 0) {                                               
-            fprintf (stderr,                                            
-                     "%s:%d: %s returned a bad status of %d.\n",        
-                     __FILE__, __LINE__, x, status);                   
-            exit (EXIT_FAILURE);                                       
-        }                                                               
+#define CALL_ZLIB(x) {                                                  \
+        int status;                                                     \
+        status = x;                                                     \
+        if (status < 0) {                                               \
+            fprintf (stderr,                                            \
+                     "%s:%d: %s returned a bad status of %d.\n",        \
+                     __FILE__, __LINE__, x, status);                    \
+            exit (EXIT_FAILURE);                                        \
+        }                                                               \
     }
 
 #define windowBits 15
