@@ -95,6 +95,7 @@ int main(int argc, char *argv[]) {
             scan_directory(argv[i]);
         }
         read_trove(filenm);
+        check_within();
         if (check_wipe()) {
             FILE *fp;
             fp  = fopen (filenm, "w");

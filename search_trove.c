@@ -11,7 +11,12 @@ void search_trove(char *word) {
             nsearch++;
         }
     }
-    for (int i=0;i<nsearch;i++) {
-        printf("%s\n", search[i].filepath);
+    if (nsearch==0) {
+        exit(EXIT_FAILURE);
+    }
+    else {
+        for (int i=0;i<nsearch;i++) {
+            printf("%s\n", search[i].filepath);
+        }
     }
 }

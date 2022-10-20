@@ -52,6 +52,7 @@ extern void collect_trove_paths();
 extern void trim_line(char *);
 extern bool check_wipe();
 extern void search_trove(char *word);
+extern void check_within();
 
 // DECLARE GLOBAL VARIABLES
 extern FILES           *files;
