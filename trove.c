@@ -99,7 +99,6 @@ int main(int argc, char *argv[]) {
             fclose(fp);
         }
         else {   
-            //read_trove(filenm);
             update_trove(1);
         }
     }
@@ -109,11 +108,16 @@ int main(int argc, char *argv[]) {
             scan_directory(argv[i]);
         }
         read_trove(filenm);
-        update_trove(2);
-        for (int n=0 ; n<nfiles ; ++n) {
-            read_file(files[n].pathname, length);
+        if (check_wipe()) {
+            write_trove();
         }
-        write_trove();
+        else {
+            update_trove(2);
+            for (int n=0 ; n<nfiles ; ++n) {
+                read_file(files[n].pathname, length);
+            }
+            write_trove();
+        }
     }
     else {
         //usage();
