@@ -1,12 +1,16 @@
 #include "trove.h"
 
 void check_within() {
+    int x = false;
     for (int i=0;i<nfiles;i++) {
-        for (int j=0;i<npaths;j++) {
-            if (strcmp(files[i].pathname, paths[j].filepath) != 0) {
-                fprintf( stderr, "'%s' not found in trove-file\n", files[i].pathname);
-                exit(EXIT_FAILURE);
+        for (int j=0;j<npaths;j++) {
+            if (strcmp(files[i].pathname, paths[j].filepath) == 0) {
+                x = true;
             }
+        }
+        if (x==false) {
+            fprintf( stderr, "[%s] not found in trove-file\n", files[i].pathname);
+            exit(EXIT_FAILURE);
         }
     }
 }
