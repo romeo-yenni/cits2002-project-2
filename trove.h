@@ -55,8 +55,8 @@ extern void trim_line(char *);
 extern bool check_wipe();
 extern void search_trove(char *word);
 extern void check_within();
-extern void compress_trove(FILE *source, FILE *dest, int level);
-extern void decompress_trove(FILE *source, FILE *dest);
+extern void def(FILE *, FILE *, int);
+extern void inf(FILE *, FILE *);
 
 // DECLARE GLOBAL VARIABLES
 extern FILES           *files;
