@@ -8,7 +8,7 @@
    level is supplied, Z_VERSION_ERROR if the version of zlib.h and the
    version of the library linked do not match, or Z_ERRNO if there is
    an error reading or writing the files. */
-int def(FILE *source, FILE *dest, int level)
+void def(FILE *source, FILE *dest, int level)
 {
     int ret, flush;
     unsigned have;
