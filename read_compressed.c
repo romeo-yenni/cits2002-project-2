@@ -2,80 +2,67 @@
 
 void read_compressed() {
 
-    int fd[2];
-    pid_t pid;
-    // FILE *fdin;
+	int fd[2];
+	if (pipe(fd) == -1) {
+		perror("pipe");
+	}
+	int pid = fork();
+	if (pid<0) {
+		perror("fork");
+	}
+	if (pid == 1) {
+		// CHILD PROCESS
+		// close(fd[0]);
 
-    pipe(fd);
+		char buf[BUFSIZ];
 
-    // error handling
-    if ((pid = fork()) == -1){
-        perror("fork");
-        exit(EXIT_FAILURE);
-    }
+		int n = strlen(filenm) + 1;
 
-    // parent load file, write to pipe
-    if (pid != 0){
-        close(fd[0]);
+		write(fd[1], &n, sizeof(int));
 
-        char buf[BUFSIZ];
-        buf[0] = '\0';
+		write(fd[1], filenm, sizeof(char) * n);
 
-        // FILE *fp;
-        // fp  = fopen (filenm, "w");
+		read(fd[0], buf, BUFSIZ);
 
-        for (int i=0;i<nwords;i++) {
-            // THINK OF SOMETHING LATER....
-            char line[200];
-            line[0] = '\0';
+		close(fd[0]);
 
-            sprintf(line, "%s %s\n", wordstruc[i].word, wordstruc[i].filepath);
+		close(fd[1]);
 
-            // fputs(line, fp);
+		printf("%s\n", buf);
 
-            strcat(buf, line);
-        }
+		wait(NULL);
+	}
+	else if (pid == 0) {//child
+		// parent process
 
-        buf[strlen(buf)-1] = '\0';
+		char buf[BUFSIZ];
 
-        // printf("%s\n", buf);
+		char par_str[200];
+		int n;
 
-        int   BufferSize = strlen(buf) + 1;
+		read(fd[0], &n, sizeof(int));
 
-        /* Reserve memory for your readed buffer */
-        char* readedBuffer = malloc(BufferSize);
-        CHECK_ALLOC(readedBuffer);
+		read(fd[0], par_str, sizeof(char) * n);
 
-        write(fd[1], buf, BufferSize);
-        close(fd[1]);
-    }
-	// child process
-    else if (pid == 0){
-        close(fd[1]);
-        dup2(fd[0], STDIN_FILENO);
-        close(fd[0]);
+        dup2(fd[1], STDIN_FILENO);
+        // close(fd[1]);
 
-		int trove    = open(filenm, O_WRONLY | O_CREAT, 0644);
-        dup2(trove, 1);
-  		close(trove);
-
-		
-        int i = execl("/usr/bin/gzip","/usr/bin/gzip", (char*)NULL);
+        int i = execl("/usr/bin/zcat","/usr/bin/zcat", par_str, (char*)NULL);
         printf("%i\n", i);
 		if (i<0) {
 			perror("execl");
 		}
-
-		perror("/usr/bin/gzip");
+		perror("/usr/bin/zcat");
 
         exit(EXIT_FAILURE);
-    }
 
-    // wait child
-    wait(NULL);
+		dup2( fd[1], STDOUT_FILENO);
+		read(fd[0], buf, BUFSIZ);
+		write(fd[1], buf, BUFSIZ);
 
+		close(fd[1]);
+		close(fd[0]);
+
+		// wait(NULL);
+	}
 }
-
-
-// parents writes compressed file to pipe
-// child reads pipe and calls zacat to read the compressed file

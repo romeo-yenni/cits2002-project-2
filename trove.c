@@ -1,3 +1,12 @@
+//  NICOLAS GOPCEVIC - 22982458
+//  HARRY ADLER      - 21968333
+
+// FILE COMPRESSION HAS BEEN IMPLEMENTED WHEREAS READING OF COMPRESSED FILES HAS NOT
+// ALL FEATURES WORKING WHEN USING AN UNCOMPRESSED TROVE-FILE
+
+// ON LINE 99 THE COMPRESS FUNCTION HAS BEEN COMMENTED 
+// TO TEST COMPRESSION NEED TO UNCOMMENT COMPRESS() AND COMMENT LINE 17 OF WRITE_TROVE.C
+
 #include "trove.h"
 
 FILES *files  = NULL;
@@ -80,21 +89,14 @@ int main(int argc, char *argv[]) {
     }
     else if (bflag) {
 
-        // FILE *fp;
-        // fp = fopen(filenm, "w");
-        // fclose(fp);
-        // char *fullpath = realpath(filenm, NULL);
-        // CHECK_ALLOC(fullpath);
-        // remove(filenm);
-        // filenm = strdup(fullpath);
         for (int i=0;i<argc;i++) {
             scan_directory(argv[i]);
             for (int n=0 ; n<nfiles ; ++n) {
                 read_file(files[n].pathname, length);
             }
         }
-        // write_trove();
-        compress();
+        write_trove();
+        // compress();
     }
     else if (rflag) {
         for (int i=0;i<argc;i++) {

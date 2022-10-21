@@ -14,7 +14,7 @@ void write_trove() {
 
         sprintf(line, "%s %s\n", wordstruc[i].word, wordstruc[i].filepath);
 
-        // fputs(line, fp);
+        fputs(line, fp);
 
         // strcat(buf, line);
 
