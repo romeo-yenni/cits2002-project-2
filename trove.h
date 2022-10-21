@@ -56,6 +56,7 @@ extern bool check_wipe();
 extern void search_trove(char *word);
 extern void check_within();
 extern void compress();
+extern void read_compressed();
 
 // DECLARE GLOBAL VARIABLES
 extern FILES           *files;

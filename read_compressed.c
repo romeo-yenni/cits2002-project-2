@@ -1,8 +1,10 @@
 #include "trove.h"
 
-void compress() {
+void read_compressed() {
+
     int fd[2];
     pid_t pid;
+    // FILE *fdin;
 
     pipe(fd);
 
@@ -19,6 +21,9 @@ void compress() {
         char buf[BUFSIZ];
         buf[0] = '\0';
 
+        // FILE *fp;
+        // fp  = fopen (filenm, "w");
+
         for (int i=0;i<nwords;i++) {
             // THINK OF SOMETHING LATER....
             char line[200];
@@ -26,10 +31,14 @@ void compress() {
 
             sprintf(line, "%s %s\n", wordstruc[i].word, wordstruc[i].filepath);
 
+            // fputs(line, fp);
+
             strcat(buf, line);
         }
 
-        buf[strlen(buf)] = '\0';
+        buf[strlen(buf)-1] = '\0';
+
+        // printf("%s\n", buf);
 
         int   BufferSize = strlen(buf) + 1;
 
@@ -64,4 +73,9 @@ void compress() {
 
     // wait child
     wait(NULL);
+
 }
+
+
+// parents writes compressed file to pipe
+// child reads pipe and calls zacat to read the compressed file
